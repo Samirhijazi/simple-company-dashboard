@@ -23,4 +23,12 @@ export const authApi = {
       .then((res) => res.data.data),
 };
 
+export const requestsApi = {
+  getAll: () => client.get("/requests").then((res) => res.data.data),
+  create: (payload) =>
+    client.post("/requests", payload).then((res) => res.data.data),
+  advanceStatus: (id) =>
+    client.patch(`/requests/${id}/status`).then((res) => res.data.data),
+};
+
 export default client;

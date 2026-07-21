@@ -1,6 +1,8 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
+const requestsRouter = require("./routes/requests");
 const authRouter = require("./routes/auth");
 
 const app = express();
@@ -10,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
+app.use("/api/requests", requestsRouter);
 
 // Fallback 404 handler
 app.use((req, res) => {
