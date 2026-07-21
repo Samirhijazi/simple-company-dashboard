@@ -44,14 +44,14 @@ You'll need **Node.js 18+** installed.
 ```bash
 cd backend
 npm install
-cp .env.example .env   # optional, defaults to PORT=4000
+cp .env.example .env   # optional, defaults to PORT=4004
 npm run dev             # or: npm start
 ```
 
-The API starts on `http://localhost:4000`. On first run it creates
+The API starts on `http://localhost:4004`. On first run it creates
 `backend/db/dashboard.db` and seeds it with a few example requests.
 
-Health check: `GET http://localhost:4000/api/health`
+Health check: `GET http://localhost:4004/api/health`
 
 ### 2. Frontend
 
@@ -69,7 +69,7 @@ Open `http://localhost:5173`. Log in with any email/password, e.g.
 
 ## API reference
 
-Base URL: `http://localhost:4000/api`
+Base URL: `http://localhost:4004/api`
 
 | Method | Endpoint               | Body                           | Description                                                                                                     |
 | ------ | ---------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------- |
