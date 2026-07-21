@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback } from 'react';
+import {authApi} from '../api/client'
 
 const AuthContext = createContext(null);
 
@@ -9,7 +10,11 @@ export function AuthProvider({ children }) {
   });
 
   const login = useCallback(async (email, password) => {
-
+    const {token, user: loggedInUser} = await authApi.login(email, password);
+    localStorage.setItem('dashboard_token', token);
+    localStorage.setItem('dashboard_user', JSON.stringify(loggedInUser));
+    setUser(loggedInUser);
+    return loggedInUser
   }, []);
 
   const logout = useCallback(() => {
