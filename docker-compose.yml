@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: ./backend
+    container_name: client-dashboard-backend
+    ports:
+      - "4004:4004"
+    environment:
+      - PORT=4004
+    volumes:
+      # Persist the SQLite file outside the container so data survives rebuilds.
+      - backend_db:/app/db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the static build at build time (see frontend/Dockerfile).
+        VITE_API_URL: http://localhost:4004/api
+    container_name: client-dashboard-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_db:

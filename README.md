@@ -128,3 +128,45 @@ Done`) is validated in `requestModel.js`, not just disabled buttons in the
 - **Optimistic-ish UI**: create/advance actions show per-row loading state
   and only update local state once the server confirms the change, avoiding
   UI/DB drift.
+
+## Running with Docker
+
+Both services are containerized. From the project root:
+
+```bash
+docker compose up --build
+```
+
+- Frontend: `http://localhost:5173` (built as a static bundle, served by nginx)
+- Backend: `http://localhost:4004`
+
+The SQLite file is persisted in a named Docker volume (`backend_db`), so data
+survives container rebuilts. To reset it: `docker compose down -v`.
+
+**Notes on the setup:**
+
+- The backend uses a multi-stage build: one stage compiles `better-sqlite3`'s
+  native addon (needs `python3`/`make`/`g++`), the final image only ships the
+  compiled output — keeps the runtime image slim and free of build tools.
+- The frontend is built as static files and served by nginx rather than
+  running the Vite dev server in production. `VITE_API_URL` is passed as a
+  Docker build ARG since Vite bakes env vars into the bundle at build time,
+  not at runtime.
+- `nginx.conf` includes a `try_files` fallback so client-side routes (like
+  refreshing on `/dashboard`) don't 404.
+
+To run just one service:
+
+```bash
+docker compose up backend
+docker compose up frontend
+```
+
+## Next steps for a real production version
+
+- Real authentication (JWT/session) with a users table and hashed passwords
+- Pagination / filtering on `GET /requests` once the table grows
+- Optimistic UI updates with rollback on failure
+- Swap SQLite for Postgres and add migrations (e.g. via Prisma or Knex)
+- Tests: API integration tests (supertest) and component tests (React
+  Testing Library)

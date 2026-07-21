@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+.env
+db/dashboard.db
+db/dashboard.db-*
+.git
