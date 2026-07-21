@@ -28,7 +28,7 @@ export default function Login() {
       await login(email.trim(), password);
       navigate('/dashboard');
     } catch (err) {
-      setError('Could not sign in. Please try again.');
+      setError(`Could not sign in. Please try again. ${err.message}`);
     } finally {
       setLoading(false);
     }

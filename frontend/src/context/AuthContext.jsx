@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   });
 
   const login = useCallback(async (email, password) => {
+    console.log("AWAW")
     const {token, user: loggedInUser} = await authApi.login(email, password);
     localStorage.setItem('dashboard_token', token);
     localStorage.setItem('dashboard_user', JSON.stringify(loggedInUser));

@@ -6,6 +6,7 @@ const router = express.Router();
 // Accept any no-empty email + password and return a fake token with user object
 router.post("/login", (req, res) => {
   const { email, password } = req.body || {};
+  console.log("SSS");
 
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
